@@ -1,4 +1,4 @@
-# Hue Help App
+# Philips Hue Lights Control
 
 <img src="./public/favicon.jpg" width="100" height="100">
 
