@@ -2,11 +2,17 @@
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
-  background-color: white;
+  background-color: rgb(25, 25, 25);
   margin: 0 auto;
-  width: 40%;
+  width: 90%;
 }
 
 .Card h3 {
   margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .Card {
+    width: 40%;
+  }
 }

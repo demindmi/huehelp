@@ -12,6 +12,7 @@ body {
   font-size: 16px;
   margin: 0;
   background-color: #202020;
+  color: rgb(90, 168, 68);
 }
 
 @media (min-width: 768px) {

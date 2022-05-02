@@ -1,15 +1,16 @@
 .button {
-  background: rgb(170, 5, 5);
+  background: rgb(97, 67, 242);
   color: white;
-  border: 1px solid #8b005d;
+  border: 1px solid rgb(16, 15, 17);
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   box-shadow: 0px 2px 3px rgb(0, 0, 0);
   padding: 0.5rem 1rem;
   cursor: pointer;
-  width: auto;
-  margin: 0 0.2rem;
+  width: 7rem;
+  margin: 0.2rem 0.2rem;
   border-radius: 5px;
+  transition: all 0.2s ease-in-out;
 }
 
 .button:focus {
@@ -17,12 +18,12 @@
 }
 
 .button:hover {
-  background: #750a0a;
+  background: rgb(140, 67, 242);
   border-color: #000;
 }
 
 .button:active {
-  background: #460606;
+  background: rgb(242, 67, 239);
   border-color: #000;
 }
 

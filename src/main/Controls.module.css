@@ -8,19 +8,19 @@
   padding-right: 0.5rem;
   width: 100%;
   font-weight: bold;
-  color: #aa0605;
+  color: rgb(184, 17, 207);
 }
 
 .Controls .lamp {
   font-weight: bold;
-  color: #aa0605;
+  color: rgb(140, 67, 242);
 }
 
 .Controls .label {
   display: block;
-  text-align: right;
+  text-align: center;
   padding-right: 0.5rem;
   width: 100%;
   font-weight: bold;
-  color: #170707;
+  color: rgb(140, 67, 242);
 }
