@@ -11,6 +11,11 @@
   color: #aa0605;
 }
 
+.Controls .lamp {
+  font-weight: bold;
+  color: #aa0605;
+}
+
 .Controls .label {
   display: block;
   text-align: right;
