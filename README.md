@@ -1,4 +1,4 @@
-# Cart Demo App
+# Hue Help App
 
 <img src="./public/favicon.jpg" width="100" height="100">
 
