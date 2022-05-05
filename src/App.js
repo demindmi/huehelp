@@ -1,10 +1,11 @@
-import Controls from "./main/Controls";
+import ControlsHub from "./components/Logic/ControlsHub";
+import LampProvider from "./components/Store/LampProvider";
 
 function App() {
   return (
-    <div className="App">
-      <Controls />
-    </div>
+    <LampProvider>
+      <ControlsHub />
+    </LampProvider>
   );
 }
 

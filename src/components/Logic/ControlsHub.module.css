@@ -1,8 +1,8 @@
-.Controls {
+.ControlsHub {
   margin-top: 3rem;
 }
 
-.Controls .value {
+.ControlsHub .value {
   display: block;
   text-align: center;
   padding-right: 0.5rem;
@@ -11,12 +11,12 @@
   color: rgb(184, 17, 207);
 }
 
-.Controls .lamp {
+.ControlsHub .lamp {
   font-weight: bold;
   color: rgb(140, 67, 242);
 }
 
-.Controls .label {
+.ControlsHub .label {
   display: block;
   text-align: center;
   padding-right: 0.5rem;
