@@ -5,134 +5,31 @@ import Modal from "../UI/Modal";
 import LampContext from "../Store/LampContext";
 
 import css from "./ControlsHub.module.css";
+import { logDOM } from "@testing-library/react";
 
 const ControlsHub = () => {
-  const [color, setColor] = useState(15000);
-  const [saturation, setSaturation] = useState(256);
-  const [brightness, setBrightness] = useState(256);
   const [modalOpen, setModalOpen] = useState(false);
-  const [options, setOptions] = useState({
-    colormode: "",
-    hue: 0,
-  });
+  const [options, setOptions] = useState({});
 
   const ctx = useContext(LampContext);
   const currentLamp = ctx.STATE.LAMPS[ctx.STATE.LAMP_INDEX];
   const delay = 300; //determines delay in mss for sending the updates to hue (default 3)
 
+  // limiting user interactions
+  useEffect(() => {
+    if (ctx.STATE.LAMPS.length > 0) {
+      const commandDelay = setTimeout(() => {
+        ctx.LAMP_CONTROL(options);
+      }, delay);
+      return () => {
+        clearTimeout(commandDelay);
+      };
+    }
+  }, [options]);
+
   useEffect(() => {
     ctx.GET_LAMPS();
   }, []);
-
-  // limiting user interactions
-  useEffect(() => {
-    const commandDelay = setTimeout(() => {
-      if (options) {
-        console.log(options);
-        ctx.LAMP_CONTROL(options);
-      }
-    }, delay);
-
-    return () => {
-      clearTimeout(commandDelay);
-      console.log("Clean up");
-    };
-  }, [options]);
-
-  // function toggle() {
-  //   send({ on: !lamp.ON });
-  //   setLamp({ ...lamp, ON: !lamp.ON });
-  // }
-
-  // function turnOn() {
-  //   send({ on: true });
-  //   setLamp({ ...lamp, ON: true });
-  // }
-
-  // function turnOff() {
-  //   send({ on: false });
-  //   setLamp({ ...lamp, ON: false });
-  // }
-
-  // function turnRed() {
-  //   send({ colormode: "hue", hue: 8000, sat: 254 });
-  // }
-
-  // function turnOrange() {
-  //   send({ colormode: "hue", hue: 16000, sat: 254 });
-  // }
-
-  // function turnYellow() {
-  //   send({ colormode: "hue", hue: 20000, sat: 254 });
-  // }
-  // function turnGreen() {
-  //   send({ colormode: "hue", hue: 26000, sat: 254 });
-  // }
-  // function turnBlue() {
-  //   send({ colormode: "hue", hue: 44000, sat: 254 });
-  // }
-  // function turnPurple() {
-  //   send({ colormode: "hue", hue: 48400, sat: 254 });
-  // }
-  // function turnPink() {
-  //   send({ colormode: "hue", hue: 58000, sat: 254 });
-  // }
-
-  // function bri25() {
-  //   send({ bri: 64 });
-  // }
-  // function bri50() {
-  //   send({ bri: 128 });
-  // }
-  // function bri75() {
-  //   send({ bri: 190 });
-  // }
-  // function bri100() {
-  //   send({ bri: 254 });
-  // }
-
-  // function turnCooler() {
-  //   send({ colormode: "ct", ct: 154 });
-  // }
-  // function turnCool() {
-  //   send({ colormode: "ct", ct: 270 });
-  // }
-  // function turnWarm() {
-  //   send({ colormode: "ct", ct: 385 });
-  // }
-  // function turnWarmer() {
-  //   send({ colormode: "ct", ct: 500 });
-  // }
-
-  // function Disco() {
-  //   send({ effect: "colorloop" });
-  // }
-
-  // function Random() {
-  //   let hueX = Math.floor(Math.random() * 65536) + 1;
-  //   let satX = Math.floor(Math.random() * 254) + 1;
-  //   let briX = Math.floor(Math.random() * 254) + 1;
-  //   send({ colormode: "hue", hue: hueX, sat: satX, bri: briX });
-  // }
-
-  // const TurnAny = () => {
-  //   send({ colormode: "hue", hue: color, sat: saturation, bri: brightness });
-  // };
-
-  // const autoColor = (e) => {
-  //   setColor(+e.target.value);
-  //   TurnAny();
-  // };
-
-  // const autoBright = (e) => {
-  //   setBrightness(+e.target.value);
-  //   TurnAny();
-  // };
-
-  // const autoSat = (e) => {
-  //   setSaturation(+e.target.value);
-  //   TurnAny();
-  // };
 
   const openModal = () => {
     setModalOpen(true);
@@ -142,47 +39,44 @@ const ControlsHub = () => {
     setModalOpen(false);
   };
 
-  // const selectLight = (e) => {
-  //   let indexOfLight = info.findIndex(
-  //     (value) => value.name === e.target.innerText
-  //   );
-  //   setLamp({
-  //     ID: info[indexOfLight].key,
-  //     NAME: info[indexOfLight].name,
-  //     TYPE: info[indexOfLight].type,
-  //     ON: info[indexOfLight].state.on,
-  //   });
-  //   closeModal();
-  // };
+  const settingsChangeHandler = (passedOptions) => {
+    const fullOptions = { ...options, ...passedOptions };
+    setOptions(fullOptions);
+  };
 
-  // const pickLight = (e) => {
-  //   console.log("Pick light called from Controls Hub");
-  //   let indexOfLight = ctx.LAMPS.findIndex(
-  //     (value) => value.name === e.target.innerText
-  //   );
-  //   // console.log("here");
-  //   // !DONT FORGET TO FIX THIS, should be  ctx.SELECT_LAMP(indexOfLight);
-  //   ctx.SELECT_LAMP(indexOfLight);
-  // };
+  const randomStyle = () => {
+    let hueX = Math.floor(Math.random() * 65536) + 1;
+    let satX = Math.floor(Math.random() * 254) + 1;
+    let briX = Math.floor(Math.random() * 254) + 1;
+    settingsChangeHandler({
+      colormode: "hue",
+      hue: hueX,
+      sat: satX,
+      bri: briX,
+    });
+  };
 
-  const getIndex = (e) => {
+  const getCurrentLamp = async (e) => {
     const INDEX = ctx.STATE.LAMPS.findIndex(
       (value) => value.name === e.target.innerText
     );
-    ctx.SELECT_LAMP(INDEX);
-    console.log(ctx.SELECT_LAMP(INDEX));
+    await ctx.SELECT_LAMP(INDEX);
+    const { alert, mode, effect, colormode, reachable, ...temp } = {
+      ...ctx.STATE.LAMPS[INDEX].state,
+    };
+    settingsChangeHandler(temp);
     closeModal();
   };
 
   return (
     <div className={css.ControlsHub}>
-      {modalOpen ? (
+      {modalOpen && (
         <Modal onClick={closeModal}>
           {ctx.STATE.LAMPS.map((value) => (
             <Button
               key={value.name}
               value={value.name}
-              onClick={(e) => getIndex(e)}>
+              onClick={(e) => getCurrentLamp(e)}>
               {value.name}
             </Button>
           ))}
@@ -190,11 +84,9 @@ const ControlsHub = () => {
             test
           </Button>
         </Modal>
-      ) : (
-        ""
       )}
-      {ctx.STATE.LAMPS.length > 0 && (
-        <Row title="Selected Lamp to Control">
+      <Row title="Selected Lamp to Control">
+        {currentLamp && (
           <h3>
             Current Lamp:{" "}
             <span className={css.lamp}>
@@ -203,64 +95,206 @@ const ControlsHub = () => {
             <br />
             Lamp Type: <span className={css.lamp}>{currentLamp.type}</span>{" "}
           </h3>
-          <Button onClick={openModal}>Choose Hue Light</Button>
+        )}
+        <Button onClick={openModal}>Choose Hue Light</Button>
+      </Row>
+
+      {currentLamp && currentLamp.type !== "Dimmable light" && (
+        <Row title="Custom Format">
+          <div>
+            <label label="Color" htmlFor="color">
+              <span className={css.label}>Color (1-65501)</span>
+              <span className={css.value}>{options.hue}</span>
+            </label>
+            <input
+              id="color"
+              step="500"
+              type="range"
+              min="1"
+              max="65501"
+              onChange={(event) =>
+                settingsChangeHandler({
+                  colormode: "hue",
+                  hue: +event.target.value,
+                })
+              }
+              value={options.hue ?? ""}></input>
+          </div>
+          <div>
+            <label label="Color" htmlFor="color">
+              <span className={css.label}>Saturation (16-256)</span>
+              <span className={css.value}>{options.sat}</span>
+            </label>
+            <input
+              id="color"
+              step="4"
+              type="range"
+              min="4"
+              max="254"
+              onChange={(event) =>
+                settingsChangeHandler({
+                  sat: +event.target.value,
+                })
+              }
+              value={options.sat ?? ""}></input>
+          </div>
+          <div>
+            <label label="bright" htmlFor="bright">
+              <span className={css.label}>Brightness (16-256)</span>
+              <span className={css.value}>{options.bri}</span>
+            </label>
+            <input
+              id="bright"
+              step="4"
+              type="range"
+              min="4"
+              max="254"
+              onChange={(event) =>
+                settingsChangeHandler({
+                  bri: +event.target.value,
+                })
+              }
+              value={options.bri ?? ""}></input>
+          </div>
         </Row>
       )}
-      {ctx.STATE.LAMPS.length > 0 &&
-        currentLamp.type !== "Dimmable light" &&
-        currentLamp.name !== "No Lamp Selected" && (
-          <Row title="Custom Format">
-            <div>
-              <label label="Color" htmlFor="color">
-                <span className={css.label}>Color (1-65501)</span>
-                <span className={css.value}>{options.hue}</span>
-              </label>
-              <input
-                id="color"
-                step="500"
-                type="range"
-                min="1"
-                max="65501"
-                onChange={(event) =>
-                  setOptions({
-                    colormode: "hue",
-                    hue: +event.target.value,
-                  })
-                }
-                value={options.hue}></input>
-            </div>
-            {/* <div>
-              <label label="Color" htmlFor="color">
-                <span className={css.label}>Saturation (16-256)</span>
-                <span className={css.value}>{saturation}</span>
-              </label>
-              <input
-                id="color"
-                step="16"
-                type="range"
-                min="16"
-                max="256"
-                // onChange={autoSat}
-                value={saturation}></input>
-            </div>
-            <div>
-              <label label="bright" htmlFor="bright">
-                <span className={css.label}>Brightness (16-256)</span>
-                <span className={css.value}>{brightness}</span>
-              </label>
-              <input
-                id="bright"
-                step="16"
-                type="range"
-                min="16"
-                max="256"
-                // onChange={autoBright}
-                value={brightness}></input>
-            </div> */}
-          </Row>
-        )}
 
-      {/* Custom Format Control */}
+      {currentLamp && (
+        <>
+          <Row title="ON/OFF Switch">
+            <Button onClick={settingsChangeHandler.bind(null, { on: true })}>
+              ON
+            </Button>
+            <Button onClick={settingsChangeHandler.bind(null, { on: false })}>
+              OFF
+            </Button>
+          </Row>
+          <Row title="Temperature">
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "ct",
+                ct: 154,
+              })}>
+              Cold
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "ct",
+                ct: 270,
+              })}>
+              Semi-Cold
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "ct",
+                ct: 385,
+              })}>
+              Semi-Warn
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "ct",
+                ct: 500,
+              })}>
+              Warm
+            </Button>
+          </Row>
+          <Row title="Brightness">
+            <Button onClick={settingsChangeHandler.bind(null, { bri: 64 })}>
+              25%
+            </Button>
+            <Button onClick={settingsChangeHandler.bind(null, { bri: 128 })}>
+              50%
+            </Button>
+            <Button onClick={settingsChangeHandler.bind(null, { bri: 190 })}>
+              75%
+            </Button>
+            <Button onClick={settingsChangeHandler.bind(null, { bri: 254 })}>
+              100%
+            </Button>
+          </Row>
+        </>
+      )}
+      {/* Pre-selected Colors */}
+
+      {currentLamp && currentLamp.type !== "Dimmable light" && (
+        <>
+          <Row title="Colors">
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "hue",
+                hue: 4000,
+                sat: 254,
+                bri: 254,
+              })}>
+              Red
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "hue",
+                hue: 8500,
+                sat: 254,
+                bri: 254,
+              })}>
+              Orange
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "hue",
+                hue: 17000,
+                sat: 254,
+                bri: 254,
+              })}>
+              Yellow
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "hue",
+                hue: 25500,
+                sat: 254,
+                bri: 254,
+              })}>
+              Green
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "hue",
+                hue: 41000,
+                sat: 254,
+                bri: 254,
+              })}>
+              Blue
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "hue",
+                hue: 48500,
+                sat: 254,
+                bri: 254,
+              })}>
+              Purple
+            </Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                colormode: "hue",
+                hue: 58000,
+                sat: 254,
+                bri: 254,
+              })}>
+              Pink
+            </Button>
+          </Row>
+          <Row title="Other Functions">
+            <Button onClick={() => randomStyle()}>Random</Button>
+            <Button
+              onClick={settingsChangeHandler.bind(null, {
+                effect: "colorloop",
+              })}>
+              Disco
+            </Button>
+          </Row>
+        </>
+      )}
     </div>
   );
 };

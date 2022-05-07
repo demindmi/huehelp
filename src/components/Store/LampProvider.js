@@ -1,32 +1,26 @@
 import React, { useReducer } from "react";
 import LampContext from "./LampContext";
 import PhillipsHue from "../../services/philipsHueCalls";
-import { logDOM } from "@testing-library/react";
 
 const defaultLampsState = {
   LAMPS: [],
-  LAMP_INDEX: 0,
+  LAMP_INDEX: -1,
 };
-
 const LampsReducer = (state, action) => {
-  // let selectedLamp = [];
-  // let lamps = {};
-
   switch (action.type) {
     case "GET_LAMPS":
       return { ...state, LAMPS: action.payload };
 
-    case "LAMP_CONTROL":
+    case "UPDATE_LAMP":
       if (state.LAMPS) {
         PhillipsHue.updateLamp(
           state.LAMPS[state.LAMP_INDEX],
           action.options
-        ).then((data) => console.log(data));
+        ).then((data) => console.log("returned from Lamp : ", data));
       }
       return { ...state };
 
     case "SELECT_LAMP":
-      console.log(action);
       if (action.lampIndex > 0) {
         return { ...state, LAMP_INDEX: action.lampIndex };
       } else {
@@ -37,13 +31,6 @@ const LampsReducer = (state, action) => {
     default:
       return state;
   }
-
-  // console.log(lamps);
-  // console.log("New State at the end:");
-  // return {
-  //   LAMPS: lamps,
-  //   LAMP: selectedLamp,
-  // };
 };
 
 const LampProvider = (props) => {
@@ -51,8 +38,8 @@ const LampProvider = (props) => {
     LampsReducer,
     defaultLampsState
   );
-  const lampControlHandler = (options) => {
-    dispatchLampAction({ type: "LAMP_CONTROL", options: options });
+  const updateLampHandler = (options) => {
+    dispatchLampAction({ type: "UPDATE_LAMP", options: options });
   };
 
   const getLampsHandler = async () => {
@@ -70,7 +57,7 @@ const LampProvider = (props) => {
     STATE: LampsState,
     SELECT_LAMP: selectLampHandler,
     GET_LAMPS: getLampsHandler,
-    LAMP_CONTROL: lampControlHandler,
+    LAMP_CONTROL: updateLampHandler,
   };
 
   return (
