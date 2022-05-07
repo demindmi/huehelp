@@ -71,7 +71,7 @@ const ControlsHub = () => {
   return (
     <div className={css.ControlsHub}>
       {modalOpen && (
-        <Modal onClick={closeModal}>
+        <Modal onClick={closeModal} header="Discoverd Lights">
           {ctx.STATE.LAMPS.map((value) => (
             <Button
               key={value.name}
@@ -80,30 +80,34 @@ const ControlsHub = () => {
               {value.name}
             </Button>
           ))}
-          <Button onClick={ctx.LAMP_CONTROL.bind(null, { on: true })}>
-            test
-          </Button>
         </Modal>
       )}
-      <Row title="Selected Lamp to Control">
-        {currentLamp && (
-          <h3>
-            Current Lamp:{" "}
-            <span className={css.lamp}>
-              {currentLamp.name}(id: {currentLamp.key})
-            </span>{" "}
-            <br />
-            Lamp Type: <span className={css.lamp}>{currentLamp.type}</span>{" "}
-          </h3>
-        )}
-        <Button onClick={openModal}>Choose Hue Light</Button>
-      </Row>
+      {!currentLamp && (
+        <Row title="LIGHT SELECTOR" className={css.mainButton}>
+          <Button onClick={openModal}>LET'S GO!</Button>
+        </Row>
+      )}
+
+      {currentLamp && (
+        <Row title={currentLamp.name}>
+          {currentLamp && (
+            <h4>
+              LAMP ID: <span className={css.lamp}>{currentLamp.key}</span>{" "}
+              <br />
+              LAMP TYPE: <span className={css.lamp}>
+                {currentLamp.type}
+              </span>{" "}
+            </h4>
+          )}
+          <Button onClick={openModal}>CHOSE LAMP</Button>
+        </Row>
+      )}
 
       {currentLamp && currentLamp.type !== "Dimmable light" && (
         <Row title="Custom Format">
-          <div>
+          <div className={css.Format}>
             <label label="Color" htmlFor="color">
-              <span className={css.label}>Color (1-65501)</span>
+              <span className={css.label}>COLOR</span>
               <span className={css.value}>{options.hue}</span>
             </label>
             <input
@@ -112,6 +116,7 @@ const ControlsHub = () => {
               type="range"
               min="1"
               max="65501"
+              class={css.slider}
               onChange={(event) =>
                 settingsChangeHandler({
                   colormode: "hue",
@@ -120,9 +125,9 @@ const ControlsHub = () => {
               }
               value={options.hue ?? ""}></input>
           </div>
-          <div>
+          <div className={css.Format}>
             <label label="Color" htmlFor="color">
-              <span className={css.label}>Saturation (16-256)</span>
+              <span className={css.label}>SATURATION</span>
               <span className={css.value}>{options.sat}</span>
             </label>
             <input
@@ -130,7 +135,8 @@ const ControlsHub = () => {
               step="4"
               type="range"
               min="4"
-              max="254"
+              max="252"
+              class={css.slider}
               onChange={(event) =>
                 settingsChangeHandler({
                   sat: +event.target.value,
@@ -138,9 +144,9 @@ const ControlsHub = () => {
               }
               value={options.sat ?? ""}></input>
           </div>
-          <div>
+          <div className={css.Format}>
             <label label="bright" htmlFor="bright">
-              <span className={css.label}>Brightness (16-256)</span>
+              <span className={css.label}>BRIGHTNESS</span>
               <span className={css.value}>{options.bri}</span>
             </label>
             <input
@@ -148,7 +154,8 @@ const ControlsHub = () => {
               step="4"
               type="range"
               min="4"
-              max="254"
+              max="252"
+              class={css.slider}
               onChange={(event) =>
                 settingsChangeHandler({
                   bri: +event.target.value,

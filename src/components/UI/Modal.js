@@ -8,7 +8,7 @@ const Modal = (props) => {
     <div>
       <div className={css.backdrop}></div>
       <Card className={css.modal}>
-        <h2>Choose Light to Control</h2>
+        <h2>{props.header}</h2>
         <div className={css.content}>{props.children}</div>
         <hr />
         <footer className={css.actions}>

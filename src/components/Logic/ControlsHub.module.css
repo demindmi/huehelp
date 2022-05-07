@@ -1,19 +1,21 @@
 .ControlsHub {
+  text-align: left;
   margin-top: 3rem;
 }
 
 .ControlsHub .value {
   display: block;
   text-align: center;
+  font-size: 1.2rem;
   padding-right: 0.5rem;
   width: 100%;
   font-weight: bold;
-  color: rgb(184, 17, 207);
+  color: #69f0ae;
 }
 
 .ControlsHub .lamp {
   font-weight: bold;
-  color: rgb(140, 67, 242);
+  color: #4ad391;
 }
 
 .ControlsHub .label {
@@ -22,5 +24,63 @@
   padding-right: 0.5rem;
   width: 100%;
   font-weight: bold;
-  color: rgb(140, 67, 242);
+  color: #ffffff;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #ffffff;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  border-radius: 5px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #43e697;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #43e697;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .Format {
+    width: 100%;
+  }
+
+  .Format input {
+    width: 100%;
+  }
+
+  .mainButton {
+    margin-top: 29vh;
+    height: 15rem;
+  }
+
+  .mainButton Button {
+    margin-top: 3.6vh;
+    height: 10vh;
+  }
+
+  .slider {
+    opacity: 1;
+  }
 }
