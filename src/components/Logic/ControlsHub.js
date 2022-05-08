@@ -40,7 +40,9 @@ const ControlsHub = () => {
   };
 
   const settingsChangeHandler = (passedOptions) => {
+    console.log(passedOptions);
     const fullOptions = { ...options, ...passedOptions };
+    console.log(fullOptions);
     setOptions(fullOptions);
   };
 
@@ -116,10 +118,9 @@ const ControlsHub = () => {
               type="range"
               min="1"
               max="65501"
-              class={css.slider}
+              className={css.slider}
               onChange={(event) =>
                 settingsChangeHandler({
-                  colormode: "hue",
                   hue: +event.target.value,
                 })
               }
@@ -136,7 +137,7 @@ const ControlsHub = () => {
               type="range"
               min="4"
               max="252"
-              class={css.slider}
+              className={css.slider}
               onChange={(event) =>
                 settingsChangeHandler({
                   sat: +event.target.value,
@@ -155,7 +156,7 @@ const ControlsHub = () => {
               type="range"
               min="4"
               max="252"
-              class={css.slider}
+              className={css.slider}
               onChange={(event) =>
                 settingsChangeHandler({
                   bri: +event.target.value,
@@ -228,7 +229,7 @@ const ControlsHub = () => {
         <>
           <Row title="Colors">
             <Button
-              onClick={settingsChangeHandler.bind(null, {
+              onClick={setOptions.bind(null, {
                 colormode: "hue",
                 hue: 4000,
                 sat: 254,
@@ -237,7 +238,7 @@ const ControlsHub = () => {
               Red
             </Button>
             <Button
-              onClick={settingsChangeHandler.bind(null, {
+              onClick={setOptions.bind(null, {
                 colormode: "hue",
                 hue: 8500,
                 sat: 254,
@@ -246,7 +247,7 @@ const ControlsHub = () => {
               Orange
             </Button>
             <Button
-              onClick={settingsChangeHandler.bind(null, {
+              onClick={setOptions.bind(null, {
                 colormode: "hue",
                 hue: 17000,
                 sat: 254,
@@ -255,7 +256,7 @@ const ControlsHub = () => {
               Yellow
             </Button>
             <Button
-              onClick={settingsChangeHandler.bind(null, {
+              onClick={setOptions.bind(null, {
                 colormode: "hue",
                 hue: 25500,
                 sat: 254,
@@ -264,7 +265,7 @@ const ControlsHub = () => {
               Green
             </Button>
             <Button
-              onClick={settingsChangeHandler.bind(null, {
+              onClick={setOptions.bind(null, {
                 colormode: "hue",
                 hue: 41000,
                 sat: 254,
@@ -273,7 +274,7 @@ const ControlsHub = () => {
               Blue
             </Button>
             <Button
-              onClick={settingsChangeHandler.bind(null, {
+              onClick={setOptions.bind(null, {
                 colormode: "hue",
                 hue: 48500,
                 sat: 254,
@@ -282,7 +283,7 @@ const ControlsHub = () => {
               Purple
             </Button>
             <Button
-              onClick={settingsChangeHandler.bind(null, {
+              onClick={setOptions.bind(null, {
                 colormode: "hue",
                 hue: 58000,
                 sat: 254,

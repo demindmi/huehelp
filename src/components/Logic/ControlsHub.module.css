@@ -27,6 +27,10 @@
   color: #ffffff;
 }
 
+.ControlsHub .mainButton {
+  margin-top: 10vh;
+}
+
 .slider {
   -webkit-appearance: none;
   width: 100%;
@@ -71,7 +75,7 @@
   }
 
   .mainButton {
-    margin-top: 29vh;
+    margin-top: 20vh;
     height: 15rem;
   }
 

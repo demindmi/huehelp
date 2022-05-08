@@ -1,6 +1,6 @@
 # Philips Hue Lights Control
 
-<img src="./public/favicon.jpg" width="100" height="100">
+<img src="./public/favicon.png" width="100" height="100">
 
 #### Title: Hue Lights Control
 
@@ -28,6 +28,9 @@ The menus render depending on lights capabilities - does the light have color se
 
 <img src="./public/Screenshots/ColorLight.png" hight= "800">
 
+###### Mobile View
+
+<img src="./public/Screenshots/Mobile.png" hight= "800">
 #### How To Start
 
 1. Clone Repo
