@@ -16,7 +16,7 @@ const LampsReducer = (state, action) => {
         PhillipsHue.updateLamp(
           state.LAMPS[state.LAMP_INDEX],
           action.options
-        ).then((data) => console.log("returned from Lamp : ", data));
+        ).then((data) => console.log("Lamp API response: ", data));
       }
       return { ...state };
 

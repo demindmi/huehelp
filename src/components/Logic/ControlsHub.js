@@ -5,7 +5,6 @@ import Modal from "../UI/Modal";
 import LampContext from "../Store/LampContext";
 
 import css from "./ControlsHub.module.css";
-import { logDOM } from "@testing-library/react";
 
 const ControlsHub = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -40,10 +39,9 @@ const ControlsHub = () => {
   };
 
   const settingsChangeHandler = (passedOptions) => {
-    console.log(passedOptions);
     const fullOptions = { ...options, ...passedOptions };
-    console.log(fullOptions);
-    setOptions(fullOptions);
+    const { xy, on, ct, ...finalOptions } = { ...fullOptions };
+    setOptions(finalOptions);
   };
 
   const randomStyle = () => {
@@ -59,6 +57,7 @@ const ControlsHub = () => {
   };
 
   const getCurrentLamp = async (e) => {
+    ctx.GET_LAMPS();
     const INDEX = ctx.STATE.LAMPS.findIndex(
       (value) => value.name === e.target.innerText
     );
@@ -102,6 +101,7 @@ const ControlsHub = () => {
             </h4>
           )}
           <Button onClick={openModal}>CHOSE LAMP</Button>
+          <Button onClick={() => ctx.GET_LAMPS()}> Get New Data </Button>
         </Row>
       )}
 
@@ -229,7 +229,7 @@ const ControlsHub = () => {
         <>
           <Row title="Colors">
             <Button
-              onClick={setOptions.bind(null, {
+              onClick={settingsChangeHandler.bind(null, {
                 colormode: "hue",
                 hue: 4000,
                 sat: 254,
@@ -238,7 +238,7 @@ const ControlsHub = () => {
               Red
             </Button>
             <Button
-              onClick={setOptions.bind(null, {
+              onClick={settingsChangeHandler.bind(null, {
                 colormode: "hue",
                 hue: 8500,
                 sat: 254,
@@ -247,7 +247,7 @@ const ControlsHub = () => {
               Orange
             </Button>
             <Button
-              onClick={setOptions.bind(null, {
+              onClick={settingsChangeHandler.bind(null, {
                 colormode: "hue",
                 hue: 17000,
                 sat: 254,
@@ -256,7 +256,7 @@ const ControlsHub = () => {
               Yellow
             </Button>
             <Button
-              onClick={setOptions.bind(null, {
+              onClick={settingsChangeHandler.bind(null, {
                 colormode: "hue",
                 hue: 25500,
                 sat: 254,
@@ -265,7 +265,7 @@ const ControlsHub = () => {
               Green
             </Button>
             <Button
-              onClick={setOptions.bind(null, {
+              onClick={settingsChangeHandler.bind(null, {
                 colormode: "hue",
                 hue: 41000,
                 sat: 254,
@@ -274,7 +274,7 @@ const ControlsHub = () => {
               Blue
             </Button>
             <Button
-              onClick={setOptions.bind(null, {
+              onClick={settingsChangeHandler.bind(null, {
                 colormode: "hue",
                 hue: 48500,
                 sat: 254,
@@ -283,7 +283,7 @@ const ControlsHub = () => {
               Purple
             </Button>
             <Button
-              onClick={setOptions.bind(null, {
+              onClick={settingsChangeHandler.bind(null, {
                 colormode: "hue",
                 hue: 58000,
                 sat: 254,
