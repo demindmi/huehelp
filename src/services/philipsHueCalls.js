@@ -21,8 +21,18 @@ const getHueUserId = async (hueIP) => {
       }),
     });
     let data = await res.json(); // convert to JSON format
-    return data[0].success.username;
+    if (data[0].error) {
+      alert(
+        "Link button is not pressed, please press the button on your router and refresh the page"
+      );
+      console.error(
+        "Link button is not pressed, please press the button on your router and refresh the page"
+      );
+    } else {
+      return data[0].success.username;
+    }
   } catch (err) {
+    console.log(err);
     console.error("getHueUserId", err);
     return null;
   }
@@ -59,15 +69,19 @@ const updateLamp = async (lamp, options) => {
 };
 
 const getLamps = async () => {
-  let hueIP = "10.88.111.4";
-  let hueID = "5Jxz2vHdPje6989HwUeJRlEnUSZigG4E89ryIkdG";
+  let hueIP;
+  let hueID;
+  // let hueIP = "10.88.111.4";
+  // let hueID = "5Jxz2vHdPje6989HwUeJRlEnUSZigG4E89ryIkdG";
 
   let lamps;
   if (!hueIP) {
     hueIP = await getPhilipsHueIp();
+    console.log(hueIP);
   }
   if (!hueID) {
     hueID = await getHueUserId(hueIP);
+    console.log(hueID);
   }
   lamps = await getPhilipsHueLights(hueIP, hueID);
   return lamps;
